@@ -67,7 +67,7 @@ class Register extends Component {
               <div className="field">
                 <div className="control has-icons-left has-icons-right">
                   <input
-                    className={classnames("input is-large", {
+                    className={classnames("input is-large has-text-grey-dark", {
                       "is-danger": errors.name
                     })}
                     type="text"
@@ -94,7 +94,7 @@ class Register extends Component {
               <div className="field">
                 <div className="control has-icons-left has-icons-right">
                   <input
-                    className={classnames("input is-large", {
+                    className={classnames("input is-large has-text-grey-dark", {
                       "is-danger": errors.email
                     })}
                     type="email"
@@ -121,7 +121,7 @@ class Register extends Component {
               <div className="field">
                 <div className="control has-icons-left has-icons-right">
                   <input
-                    className={classnames("input is-large", {
+                    className={classnames("input is-large has-text-grey-dark", {
                       "is-danger": errors.password
                     })}
                     type="password"

@@ -33,7 +33,7 @@ module.exports = {
 
   signJwtToken: (user, secretOrKey, expiresIn) => {
     // Create JWT Payload
-    const payload = { id: user.id, name: user.name, avatar: user.avatar };
+    const payload = { id: user.id, name: user.name, avatar: user.avatar, email: user.email };
     const promise = new Promise((resolve, reject) => {
       // Sign Token
       jwt.sign(payload, secretOrKey, expiresIn, (err, token) => {

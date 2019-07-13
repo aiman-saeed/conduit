@@ -20,8 +20,9 @@ export default class Navbar extends Component {
       SETTINGS_TEXT: config.SETTINGS_TEXT,
       NEWARTICLE_URL: config.NEWARTICLE_URL,
       SETTINGS_URL: config.SETTINGS_URL,
-      USERNAME: auth.user.name,
       PROFILE_URL: config.PROFILE_URL,
+      DEFAULT_USER_IMG_URL: config.DEFAULT_USER_IMG_URL,
+      USERNAME: auth.user.name,
       AVATAR_IMG_URL: auth.user.avatar
     };
 

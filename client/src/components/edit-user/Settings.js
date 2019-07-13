@@ -1,23 +1,42 @@
 import React, { Component } from "react";
 import Break from "./../elements/Break";
 import classnames from "classnames";
+import PropTypes from "prop-types";
 
-export default class Settings extends Component {
-  constructor() {
-    super();
+class Settings extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
     this.state = {
-      avatar: "",
-      name: "",
+      avatar: props.auth.user.avatar,
+      name: props.auth.user.name,
       bio: "",
-      email: "",
+      email: props.auth.user.email,
       password: "",
       errors: {}
     };
 
     this.onChange = this.onChange.bind(this);
-    //this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onClick  = this.onClick.bind(this);
   }
 
+  onClick(e){
+    e.preventDefault();
+    alert('Clicked!');
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    const userData = {
+      email: this.state.email,
+      password: this.state.password,
+      avatar: this.state.avatar,
+      name: this.state.name,
+      bio: this.state.bio,
+    };
+    this.props.onSubmit(userData);
+  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -41,11 +60,11 @@ export default class Settings extends Component {
 
         <div className="columns">
           <div className="column is-6 is-offset-3">
-            <form>
+            <form onSubmit={this.onSubmit}>
               <div className="field">
                 <div className="control has-icons-left">
                   <input
-                    className="input is-large"
+                    className="input is-large has-text-grey-dark"
                     type="text"
                     placeholder="URL of Profile Picture"
                     name="avatar"
@@ -53,7 +72,7 @@ export default class Settings extends Component {
                     onChange={this.onChange}
                   />
                   <span className="icon is-small is-left">
-                    <i class="fas fa-link" />
+                    <i className="fas fa-link" />
                   </span>
                 </div>
               </div>
@@ -61,7 +80,7 @@ export default class Settings extends Component {
               <div className="field">
                 <div className="control has-icons-left has-icons-right">
                   <input
-                    className={classnames("input is-large", {
+                    className={classnames("input is-large has-text-grey-dark", {
                       "is-danger": errors.name
                     })}
                     type="text"
@@ -87,7 +106,7 @@ export default class Settings extends Component {
               <div className="field">
                 <div className="control">
                   <textarea
-                    className="textarea input is-large"
+                    className="textarea input is-large has-text-grey-dark"
                     type="text"
                     placeholder="Short bio about you"
                     name="bio"
@@ -100,7 +119,7 @@ export default class Settings extends Component {
               <div className="field">
                 <div className="control has-icons-left has-icons-right">
                   <input
-                    className={classnames("input is-large", {
+                    className={classnames("input is-large has-text-grey-dark", {
                       "is-danger": errors.email
                     })}
                     type="email"
@@ -126,7 +145,7 @@ export default class Settings extends Component {
               <div className="field">
                 <div className="control has-icons-left has-icons-right">
                   <input
-                    className={classnames("input is-large", {
+                    className={classnames("input is-large has-text-grey-dark", {
                       "is-danger": errors.password
                     })}
                     type="password"
@@ -150,6 +169,17 @@ export default class Settings extends Component {
               </div>
 
               <div className="field is-grouped is-grouped-right">
+
+                <p className="control">
+                  <button
+                    className="button is-danger is-medium is-outlined"
+                    type="button"
+                    onClick={this.onClick}
+                  >
+                    Log Out
+                  </button>
+                </p>
+
                 <p className="control">
                   <button
                     className="button is-success is-medium has-background-link"
@@ -166,3 +196,12 @@ export default class Settings extends Component {
     );
   }
 }
+
+
+Settings.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+export default Settings

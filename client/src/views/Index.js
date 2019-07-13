@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import LoginContainer from "../containers/LoginContainer";
 import RegisterContainer from "../containers/RegisterContainer";
 import NavbarContainer from "../containers/NavbarContainer";
-import Settings from "./../components/edit-user/Settings";
+import SettingsContainer from "../containers/SettingsContainer";
 import Landing from "../components/layout/Landing";
 import setAuthToken from "./../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
@@ -41,7 +41,7 @@ export default function Index() {
         <Route exact path={HOME_URL} component={Landing} />
         <Route exact path={LOGIN_URL} component={LoginContainer} />
         <Route exact path={SIGNUP_URL} component={RegisterContainer} />
-        <Route exact path={SETTINGS_URL} component={Settings} />
+        <Route exact path={SETTINGS_URL} component={SettingsContainer} />
       </div>
     </Router>
   );

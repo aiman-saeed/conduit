@@ -12,7 +12,6 @@ export class NavbarContainer extends Component {
       ...constants,
       ...urls
     };
-    console.log(config);
     return <NavBar auth={this.props.auth} config={config} />;
   }
 }
