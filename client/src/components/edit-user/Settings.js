@@ -23,7 +23,7 @@ class Settings extends Component {
 
   onClick(e){
     e.preventDefault();
-    alert('Clicked!');
+    this.props.onClick();
   }
 
   onSubmit(e) {
@@ -37,6 +37,7 @@ class Settings extends Component {
     };
     this.props.onSubmit(userData);
   }
+  
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });

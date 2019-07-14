@@ -1,13 +1,24 @@
+import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { withRouter } from "react-router-dom";
+
 import Settings from "../components/edit-user/Settings";
 
-import React, { Component } from "react";
+import {PROFILE_URL, LOGIN_URL} from "./../routes/index";
 
-import {PROFILE_URL} from "./../routes/index";
+import {logoutUser} from "./../actions/authActions"
+
+import store from "./../store"
 
 export class SettingsContainer extends Component {
+
+  onClick = ()=>{
+    // Logout user
+    store.dispatch(logoutUser());
+
+    // Redirect to Login
+    this.props.history.push(LOGIN_URL)
+  }
   onSubmit = userData => {
     console.log(userData);
     console.log('Settings Form Submitted.');
@@ -22,6 +33,7 @@ export class SettingsContainer extends Component {
         auth={this.props.auth}
         errors={this.props.errors}
         onSubmit={this.onSubmit}
+        onClick={this.onClick}
       />
     );
   }
