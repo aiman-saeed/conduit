@@ -13,3 +13,6 @@ Technology Stack: NodeJS, Express, MongoDB, React, Redux.
 #### Client
 1. $client: npm install
 2. $client: npm start
+
+
+Functionality is referenced from https://github.com/gothinkster/react-redux-realworld-example-app
