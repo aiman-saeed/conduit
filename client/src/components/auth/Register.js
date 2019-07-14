@@ -61,6 +61,7 @@ class Register extends Component {
             </Link>
           </div>
         </div>
+
         <div className="columns">
           <div className="column is-6 is-offset-3">
             <form onSubmit={this.onSubmit}>

@@ -1,5 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PrivateRoute from "./../components/common/PrivateRoute";
+
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import LoginContainer from "../containers/LoginContainer";
 import RegisterContainer from "../containers/RegisterContainer";
@@ -33,7 +37,7 @@ if (localStorage.jwtToken) {
   }
 }
 
-export default function Index() {
+function Index(props) {
   return (
     <Router>
       <div className="App">
@@ -41,8 +45,25 @@ export default function Index() {
         <Route exact path={HOME_URL} component={Landing} />
         <Route exact path={LOGIN_URL} component={LoginContainer} />
         <Route exact path={SIGNUP_URL} component={RegisterContainer} />
-        <Route exact path={SETTINGS_URL} component={SettingsContainer} />
+        <Switch>
+          <PrivateRoute
+            exact
+            auth={props.auth}
+            path={SETTINGS_URL}
+            component={SettingsContainer}
+          />
+        </Switch>
       </div>
     </Router>
   );
 }
+
+Index.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Index);

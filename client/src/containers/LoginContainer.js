@@ -17,6 +17,7 @@ export class LoginContainer extends Component {
         auth={this.props.auth}
         errors={this.props.errors}
         onSubmit={this.onSubmit}
+        location={this.props.location}
       />
     );
   }

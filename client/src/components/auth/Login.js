@@ -37,16 +37,28 @@ class Login extends Component {
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
     this.setState({ errors: {} });
+    this.props.location.state = undefined;
   }
 
   render() {
     const { errors } = this.state;
-    
+
     return (
       <div className="Login">
         <Break times={2} />
         <div className="columns">
           <div className="column is-12">
+            {this.props.location.state && (
+              <div className="columns">
+                <div className="column is-6 is-offset-3">
+                  <article className="message is-danger">
+                    <div className="message-body">
+                      {this.props.location.state.redirect_msg}
+                    </div>
+                  </article>
+                </div>
+              </div>
+            )}
             <h1 className="title is-1 has-text-centered has-text-grey-dark">
               Log In
             </h1>
