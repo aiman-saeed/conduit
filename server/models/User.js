@@ -100,12 +100,13 @@ UserSchema.statics.updateUser = userData => {
     const { myUser, name, email, password, avatar, bio } = userData;
     myUser.name = name;
     myUser.email = email;
-    //myUser.password = password;
     myUser.avatar = avatar;
     myUser.bio = bio;
-
-    myUser
-      .save()
+    Utils.hashPassword(password)
+      .then(hash => {
+        myUser.password = hash;
+        return myUser.save();
+      })
       .then(user => {
         resolve(user);
       })

@@ -51,7 +51,6 @@ const updateUser = req => {
             if (Object.keys(errors).length) {
               reject(errors);
             } else {
-              console.log("calls update");
               return User.updateUser({
                 myUser,
                 name,
