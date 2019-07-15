@@ -23,6 +23,52 @@ const testPrivate = (req, res) => {
   });
 };
 
+// User update POST request service handler
+const updateUser = req => {
+  const { name, email } = req.body;
+  const errors = {};
+  return new Promise((resolve, reject) => {
+    User.getUser(req.user.id)
+      .then(myUser => {
+        User.nameExistsErr(name)
+          .then(({ user, err }) => {
+            if (user) {
+              if (!user._id.equals(req.user.id)) {
+                errors.name = err;
+              }
+            }
+            return User.emailExistsErr(email);
+          })
+          .then(({ user, err }) => {
+            if (user) {
+              if (!user._id.equals(req.user.id)) {
+                errors.email = err;
+              }
+            }
+            return;
+          })
+          .then(() => {
+            if (Object.keys(errors).length) {
+              reject(errors);
+            } else {
+              console.log("calls update");
+              return User.updateUser({
+                myUser,
+                name,
+                email,
+                password: req.body.password,
+                avatar: req.body.avatar,
+                bio: req.body.bio
+              });
+            }
+          })
+          .then(user => resolve(user))
+          .catch(err => reject({ err }));
+      })
+      .catch(err => reject({ err }));
+  });
+};
+
 // registerUser POST request service handler
 const registerUser = req => {
   const promise = new Promise((resolve, reject) => {
@@ -82,5 +128,6 @@ module.exports = {
   test,
   testPrivate,
   registerUser,
-  loginUser
+  loginUser,
+  updateUser
 };

@@ -22,6 +22,20 @@ router.get(
   users_services.testPrivate
 );
 
+// @route   POST api/users/update
+// @desc    Update user
+// @access  Private
+router.post(
+  "/update",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    users_services
+      .updateUser(req)
+      .then(user => res.json(user))
+      .catch(err => res.status(400).json(err));
+  }
+);
+
 // @route   GET api/users/register
 // @desc    Register user
 // @access  Public
