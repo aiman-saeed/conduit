@@ -4,31 +4,33 @@ import { withRouter } from "react-router-dom";
 
 import Settings from "../components/edit-user/Settings";
 
-import {PROFILE_URL, LOGIN_URL} from "./../routes/index";
+import { PROFILE_URL, LOGIN_URL } from "./../routes/index";
 
-import {logoutUser} from "./../actions/authActions"
+import { logoutUser } from "./../actions/authActions";
+import { updateUser } from "./../actions/updateUser";
 
-import store from "./../store"
+import store from "./../store";
 
 export class SettingsContainer extends Component {
-
-  onClick = ()=>{
+  onClick = () => {
     // Logout user
     store.dispatch(logoutUser());
 
     // Redirect to Login
-    this.props.history.push(LOGIN_URL)
-  }
+    this.props.history.push(LOGIN_URL);
+  };
+
   onSubmit = userData => {
-    console.log(userData);
-    console.log('Settings Form Submitted.');
-    this.props.history.push(PROFILE_URL+'/'+this.props.auth.user.name);
+    this.props.updateUser(
+      userData,
+      this.props.history,
+      PROFILE_URL + "/" + this.props.auth.user.name,
+      { iat: this.props.auth.user.iat, exp: this.props.auth.user.exp }
+    );
   };
 
   render() {
-    console.log(this.props.auth);
     return (
-        
       <Settings
         auth={this.props.auth}
         errors={this.props.errors}
@@ -45,5 +47,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  { updateUser }
 )(withRouter(SettingsContainer));

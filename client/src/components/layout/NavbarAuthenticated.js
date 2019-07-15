@@ -28,15 +28,20 @@ export default function NavbarUnauthenticated(props) {
         <div className="columns">
           <div className="column is-1 is-offset-2">
             <figure className="image is-24x24">
-              
-              {
-              !config.AVATAR_IMG_URL && <img className="is-rounded" alt="" src={config.DEFAULT_USER_IMG_URL} />
-              }
-              {
-              config.AVATAR_IMG_URL && <img className="is-rounded" alt="" src={config.AVATAR_IMG_URL} />
-              }
-
-              <img className="is-rounded" alt="" src={config.AVATAR_IMG_URL} />
+              {!config.AVATAR_IMG_URL && (
+                <img
+                  className="is-rounded"
+                  alt=""
+                  src={config.DEFAULT_USER_IMG_URL}
+                />
+              )}
+              {config.AVATAR_IMG_URL && (
+                <img
+                  className="is-rounded"
+                  alt=""
+                  src={config.AVATAR_IMG_URL}
+                />
+              )}
             </figure>
           </div>
           <div className="column">

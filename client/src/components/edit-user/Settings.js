@@ -18,10 +18,10 @@ class Settings extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onClick  = this.onClick.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
-  onClick(e){
+  onClick(e) {
     e.preventDefault();
     this.props.onClick();
   }
@@ -33,11 +33,11 @@ class Settings extends Component {
       password: this.state.password,
       avatar: this.state.avatar,
       name: this.state.name,
-      bio: this.state.bio,
+      bio: this.state.bio
     };
     this.props.onSubmit(userData);
   }
-  
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -170,7 +170,6 @@ class Settings extends Component {
               </div>
 
               <div className="field is-grouped is-grouped-right">
-
                 <p className="control">
                   <button
                     className="button is-danger is-medium is-outlined"
@@ -198,11 +197,11 @@ class Settings extends Component {
   }
 }
 
-
 Settings.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
-export default Settings
+export default Settings;
