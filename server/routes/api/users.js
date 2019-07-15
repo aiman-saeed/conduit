@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 
 const { users_services } = require("./../../services/index.js");
 
@@ -11,6 +12,15 @@ const { users_services } = require("./../../services/index.js");
 // @desc    Tests users route
 // @access  Public
 router.get("/test", users_services.test);
+
+// @route   GET api/users/testPrivate
+// @desc    Tests users route
+// @access  Public
+router.get(
+  "/testPrivate",
+  passport.authenticate("jwt", { session: false }),
+  users_services.testPrivate
+);
 
 // @route   GET api/users/register
 // @desc    Register user

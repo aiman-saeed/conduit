@@ -9,7 +9,18 @@ const User = require("./../models/User");
 
 // test GET request service handler
 const test = (req, res) => {
-  res.json({ msg: "User Works" });
+  res.json({ msg: "Public Route: User Works" });
+};
+
+// test GET request service handler
+const testPrivate = (req, res) => {
+  res.json({
+    msg: "Private Route: User Works",
+    id: req.user.id,
+    name: req.user.name,
+    email: req.user.email,
+    avatar: req.user.avatar
+  });
 };
 
 // registerUser POST request service handler
@@ -69,6 +80,7 @@ const loginUser = req => {
 // Exports
 module.exports = {
   test,
+  testPrivate,
   registerUser,
   loginUser
 };

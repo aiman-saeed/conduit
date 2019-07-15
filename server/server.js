@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const user = require("./routes/api/users");
 
@@ -19,7 +20,14 @@ mongoose
   .then(() => console.log("MongooDB Connected"))
   .catch(err => console.log(err));
 
-app.get("/", (req, res) => res.send("<h3>Conduit.<h3>"));
+// Passport middleware for Auth Header Validation
+app.use(passport.initialize());
+
+// Passport Config for Auth Header Validation
+require("./config/passport")(passport);
+
+// Hello Server route
+app.get("/", (req, res) => res.send("<h3>Welcome to Conduit Server.<h3>"));
 
 // Use Routes
 app.use("/api/users", user);
