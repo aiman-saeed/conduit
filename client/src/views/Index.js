@@ -9,13 +9,21 @@ import LoginContainer from "../containers/LoginContainer";
 import RegisterContainer from "../containers/RegisterContainer";
 import NavbarContainer from "../containers/NavbarContainer";
 import SettingsContainer from "../containers/SettingsContainer";
+import AddArticleContainer from "../containers/AddArticleContainer";
+
 import Landing from "../components/layout/Landing";
 import setAuthToken from "./../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import store from "./../store";
 import { setCurrentUser, logoutUser } from "./../actions/authActions";
 
-import { LOGIN_URL, SIGNUP_URL, HOME_URL, SETTINGS_URL } from "../routes/index";
+import {
+  LOGIN_URL,
+  SIGNUP_URL,
+  HOME_URL,
+  SETTINGS_URL,
+  NEWARTICLE_URL
+} from "../routes/index";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -45,12 +53,22 @@ function Index(props) {
         <Route exact path={HOME_URL} component={Landing} />
         <Route exact path={LOGIN_URL} component={LoginContainer} />
         <Route exact path={SIGNUP_URL} component={RegisterContainer} />
+
         <Switch>
           <PrivateRoute
             exact
             auth={props.auth}
             path={SETTINGS_URL}
             component={SettingsContainer}
+          />
+        </Switch>
+
+        <Switch>
+          <PrivateRoute
+            exact
+            auth={props.auth}
+            path={NEWARTICLE_URL}
+            component={AddArticleContainer}
           />
         </Switch>
       </div>

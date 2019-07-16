@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 class Settings extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+
     this.state = {
       avatar: props.auth.user.avatar,
       name: props.auth.user.name,
