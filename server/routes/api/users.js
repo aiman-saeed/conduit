@@ -15,7 +15,7 @@ router.get("/test", users_services.test);
 
 // @route   GET api/users/testPrivate
 // @desc    Tests users route
-// @access  Public
+// @access  Private
 router.get(
   "/testPrivate",
   passport.authenticate("jwt", { session: false }),
