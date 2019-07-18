@@ -36,4 +36,12 @@ const ArticleSchema = new Schema({
   }
 });
 
+ArticleSchema.statics.getArticle = id => {
+  return new Promise((resolve, reject) => {
+    Article.findOne({ _id: id })
+      .then(article => resolve(article))
+      .catch(err => reject("Article not found"));
+  });
+};
+
 module.exports = Article = mongoose.model("articles", ArticleSchema);

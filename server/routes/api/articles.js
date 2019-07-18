@@ -22,7 +22,7 @@ router.get(
   articles_services.testPrivate
 );
 
-// @route   POST api/articles/
+// @route   POST api/articles/add
 // @desc    Tests articles route
 // @access  Private
 router.post(
@@ -35,5 +35,15 @@ router.post(
       .catch(err => res.status(400).json(err));
   }
 );
+
+// @route   GET api/articles/:id
+// @desc    get article route
+// @access  Public
+router.get("/:id", (req, res) => {
+  articles_services
+    .getArticlePayload(req)
+    .then(articlePayload => res.json(articlePayload))
+    .catch(err => res.status(400).json(err));
+});
 
 module.exports = router;

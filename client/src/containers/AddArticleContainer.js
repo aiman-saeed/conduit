@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import AddArticle from "../components/add-article/AddArticle";
 
@@ -7,9 +8,7 @@ import { addArticle } from "./../actions/articleActions";
 
 export class AddArticleContainer extends Component {
   onSubmit = userData => {
-    console.log("Article Submited");
-    console.log(userData);
-    this.props.addArticle(userData);
+    this.props.addArticle(userData, this.props.history);
   };
 
   render() {
@@ -24,4 +23,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { addArticle }
-)(AddArticleContainer);
+)(withRouter(AddArticleContainer));

@@ -1,5 +1,7 @@
-// Load User model
+// Load Article model
 const Article = require("./../models/Article");
+// Load User model
+const User = require("./../models/User");
 
 const { validateArticleInput } = require("./validation/article");
 const isEmpty = require("./validation/is-empty");
@@ -17,6 +19,26 @@ const testPrivate = (req, res) => {
     name: req.user.name,
     email: req.user.email,
     avatar: req.user.avatar
+  });
+};
+
+// returns the article specified by the params:id
+const getArticlePayload = req => {
+  return new Promise((resolve, reject) => {
+    const payload = {};
+
+    Article.getArticle(req.params.id)
+      .then(article => {
+        payload.data = article;
+        return User.getUser(article.user);
+      })
+      .then(user => {
+        payload.user = user;
+        resolve(payload);
+      })
+      .catch(err => {
+        reject({ err });
+      });
   });
 };
 
@@ -53,5 +75,6 @@ const addArticle = req => {
 module.exports = {
   test,
   testPrivate,
-  addArticle
+  addArticle,
+  getArticlePayload
 };

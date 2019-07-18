@@ -89,7 +89,7 @@ UserSchema.statics.getUser = id => {
   return new Promise((resolve, reject) => {
     User.findOne({ _id: id })
       .then(user => resolve(user))
-      .catch(err => reject(err));
+      .catch(err => reject("User not found"));
   });
 };
 

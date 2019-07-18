@@ -10,6 +10,7 @@ import RegisterContainer from "../containers/RegisterContainer";
 import NavbarContainer from "../containers/NavbarContainer";
 import SettingsContainer from "../containers/SettingsContainer";
 import AddArticleContainer from "../containers/AddArticleContainer";
+import ViewArticleContainer from "../containers/ViewArticleContainer";
 
 import Landing from "../components/layout/Landing";
 import setAuthToken from "./../utils/setAuthToken";
@@ -22,7 +23,8 @@ import {
   SIGNUP_URL,
   HOME_URL,
   SETTINGS_URL,
-  NEWARTICLE_URL
+  NEWARTICLE_URL,
+  VIEWARTICLE_URL
 } from "../routes/index";
 
 // Check for token
@@ -53,7 +55,11 @@ function Index(props) {
         <Route exact path={HOME_URL} component={Landing} />
         <Route exact path={LOGIN_URL} component={LoginContainer} />
         <Route exact path={SIGNUP_URL} component={RegisterContainer} />
-
+        <Route
+          exact
+          path={VIEWARTICLE_URL + "/:id"}
+          component={ViewArticleContainer}
+        />
         <Switch>
           <PrivateRoute
             exact
