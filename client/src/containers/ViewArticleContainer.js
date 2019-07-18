@@ -10,11 +10,23 @@ class ViewArticleContainer extends Component {
     this.props.getArticle(this.props.match.params.id);
   }
   render() {
-    return <ViewArticle />;
+    return (
+      <ViewArticle
+        auth={this.props.auth}
+        errors={this.props.errors}
+        article={this.props.article}
+      />
+    );
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors,
+  article: state.article
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { getArticle }
 )(ViewArticleContainer);
