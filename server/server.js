@@ -5,6 +5,7 @@ const passport = require("passport");
 
 const user = require("./routes/api/users");
 const article = require("./routes/api/articles");
+const comment = require("./routes/api/comments");
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.get("/", (req, res) => res.send("<h3>Welcome to Conduit Server.<h3>"));
 // Use Routes
 app.use("/api/users", user);
 app.use("/api/articles", article);
+app.use("/api/comments", comment);
 
 const port = process.env.PORT || 5000;
 

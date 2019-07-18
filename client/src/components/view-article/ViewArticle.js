@@ -18,7 +18,11 @@ class ViewArticle extends Component {
       <div className="field is-grouped ">
         <div className="control">
           <UserDetails
-            src="/default_user.png"
+            src={
+              !this.props.article.user.avatar
+                ? this.props.DEFAULT_USER_IMG_URL
+                : this.props.article.user.avatar
+            }
             name={this.props.article.user.name}
             date={moment(this.props.article.data.date).format("LL")}
             color={userDetails_text_color}
@@ -61,7 +65,15 @@ class ViewArticle extends Component {
               )}
             </div>
           </div>
-          <ArticleComments />
+          <ArticleComments
+            avatar={
+              !this.props.article.user.avatar
+                ? this.props.DEFAULT_USER_IMG_URL
+                : this.props.article.user.avatar
+            }
+            article_id={this.props.article.data._id}
+            auth={this.props.auth}
+          />
         </div>
       </div>
     );

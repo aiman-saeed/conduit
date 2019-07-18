@@ -5,6 +5,8 @@ import ViewArticle from "../components/view-article/ViewArticle";
 
 import { getArticle } from "./../actions/articleActions";
 
+import { DEFAULT_USER_IMG_URL } from "./../config/constants";
+
 class ViewArticleContainer extends Component {
   componentDidMount() {
     this.props.getArticle(this.props.match.params.id);
@@ -15,6 +17,7 @@ class ViewArticleContainer extends Component {
         auth={this.props.auth}
         errors={this.props.errors}
         article={this.props.article}
+        DEFAULT_USER_IMG_URL={DEFAULT_USER_IMG_URL}
       />
     );
   }

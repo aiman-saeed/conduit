@@ -7,6 +7,10 @@ const CommentSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
+  article: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Article"
+  },
   body: {
     type: String,
     required: true
@@ -17,4 +21,19 @@ const CommentSchema = new Schema({
   }
 });
 
-module.exports = Comment = mongoose.model("articles", CommentSchema);
+CommentSchema.statics.addComment = (article_id, user_id, comment_body) => {
+  return new Promise((resolve, reject) => {
+    const newComment = new Comment({
+      user: user_id,
+      article: article_id,
+      body: comment_body
+    });
+
+    newComment
+      .save()
+      .then(comment => resolve(comment))
+      .catch(err => reject(err));
+  });
+};
+
+module.exports = Comment = mongoose.model("comments", CommentSchema);
