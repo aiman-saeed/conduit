@@ -33,4 +33,15 @@ router.post(
   }
 );
 
+router.post(
+  "/all/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    comments_services
+      .getComments(req)
+      .then(comments => res.json(comments))
+      .catch(err => res.status(400).json(err));
+  }
+);
+
 module.exports = router;

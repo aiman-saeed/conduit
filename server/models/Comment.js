@@ -21,6 +21,14 @@ const CommentSchema = new Schema({
   }
 });
 
+CommentSchema.statics.getAllCommentsByArticle = function(articleId) {
+  return new Promise((resolve, reject) => {
+    Comment.find({ article: articleId })
+      .then(commentsData => resolve(commentsData))
+      .catch(err => reject("Comments could'nt be fetched."));
+  });
+};
+
 CommentSchema.statics.addComment = (article_id, user_id, comment_body) => {
   return new Promise((resolve, reject) => {
     const newComment = new Comment({

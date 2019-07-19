@@ -44,6 +44,25 @@ UserSchema.statics.emailDoesntExists = email => {
 };
 
 // Static Method
+UserSchema.statics.getUsersCommentData = usersIdArr => {
+  const mongooseObjectsArr = [];
+  usersIdArr.forEach(id => {
+    mongooseObjectsArr.push(mongoose.Types.ObjectId(id));
+  });
+
+  return new Promise((resolve, reject) => {
+    User.find(
+      { _id: { $in: mongooseObjectsArr } },
+      { _id: 1, avatar: 1, name: 1 }
+    )
+      .then(users => {
+        resolve(users);
+      })
+      .catch(err => reject("Couldn't Resolve Users data."));
+  });
+};
+
+// Static Method
 // Searches user by email and returns a promise, success on existence
 UserSchema.statics.emailExists = email => {
   const promise = new Promise((resolve, reject) => {
