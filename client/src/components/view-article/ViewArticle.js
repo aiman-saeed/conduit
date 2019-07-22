@@ -61,7 +61,7 @@ class ViewArticle extends Component {
             <div className="column is-offset-5">
               {this.userDetailsHolder(
                 "has-text-grey-darker",
-                "has-text-grey-dark"
+                "has-text-grey-dark",
               )}
             </div>
           </div>
@@ -73,6 +73,7 @@ class ViewArticle extends Component {
             }
             article_id={this.props.article.data._id}
             auth={this.props.auth}
+            authLinks={this.props.authLinks}
           />
         </div>
       </div>
@@ -87,7 +88,7 @@ class ViewArticle extends Component {
 ViewArticle.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  article: PropTypes.object.isRequired
+  article: PropTypes.object.isRequired,
 };
 
 export default ViewArticle;

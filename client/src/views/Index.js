@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from "./../components/common/PrivateRoute";
 
 import { connect } from "react-redux";
@@ -24,7 +24,7 @@ import {
   HOME_URL,
   SETTINGS_URL,
   NEWARTICLE_URL,
-  VIEWARTICLE_URL
+  VIEWARTICLE_URL,
 } from "../routes/index";
 
 // Check for token
@@ -60,34 +60,29 @@ function Index(props) {
           path={VIEWARTICLE_URL + "/:id"}
           component={ViewArticleContainer}
         />
-        <Switch>
-          <PrivateRoute
-            exact
-            auth={props.auth}
-            path={SETTINGS_URL}
-            component={SettingsContainer}
-          />
-        </Switch>
-
-        <Switch>
-          <PrivateRoute
-            exact
-            auth={props.auth}
-            path={NEWARTICLE_URL}
-            component={AddArticleContainer}
-          />
-        </Switch>
+        <PrivateRoute
+          exact
+          auth={props.auth}
+          path={SETTINGS_URL}
+          component={SettingsContainer}
+        />
+        <PrivateRoute
+          exact
+          auth={props.auth}
+          path={NEWARTICLE_URL}
+          component={AddArticleContainer}
+        />
       </div>
     </Router>
   );
 }
 
 Index.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps)(Index);

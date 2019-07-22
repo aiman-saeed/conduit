@@ -8,12 +8,12 @@ import { SIGNUP_URL } from "./../../routes/index";
 import Break from "./../elements/Break";
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: "",
       password: "",
-      errors: {}
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -29,7 +29,7 @@ class Login extends Component {
     e.preventDefault();
     const userData = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
     this.props.onSubmit(userData);
   }
@@ -77,7 +77,7 @@ class Login extends Component {
                 <div className="control has-icons-left has-icons-right">
                   <input
                     className={classnames("input is-large has-text-grey-dark", {
-                      "is-danger": errors.email
+                      "is-danger": errors.email,
                     })}
                     type="email"
                     placeholder="Email"
@@ -104,7 +104,7 @@ class Login extends Component {
                 <div className="control has-icons-left has-icons-right">
                   <input
                     className={classnames("input is-large has-text-grey-dark", {
-                      "is-danger": errors.password
+                      "is-danger": errors.password,
                     })}
                     type="password"
                     placeholder="Password"
@@ -148,6 +148,6 @@ class Login extends Component {
 Login.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
 };
 export default Login;

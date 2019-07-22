@@ -8,7 +8,7 @@ class AddCommentForm extends Component {
     super();
     this.state = {
       body: "",
-      errors: {}
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -24,7 +24,7 @@ class AddCommentForm extends Component {
   onSubmit(e) {
     e.preventDefault();
     const commentData = {
-      body: this.state.body
+      body: this.state.body,
     };
     this.props.addComment(this.props.article_id, commentData);
     this.setState({ body: "", errors: "" });
@@ -57,7 +57,7 @@ class AddCommentForm extends Component {
           </div>
           <div className="level-right">
             <div className="level-item">
-              <button className="button is-success" type="submit">
+              <button className="button is-link" type="submit">
                 Post Comment
               </button>
             </div>
@@ -70,5 +70,5 @@ class AddCommentForm extends Component {
 
 export default connect(
   null,
-  { addComment }
+  { addComment },
 )(AddCommentForm);
