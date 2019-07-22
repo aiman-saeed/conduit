@@ -7,26 +7,31 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  tokens: [
+    {
+      type: String,
+    },
+  ],
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   avatar: {
     type: String,
-    default: ""
+    default: "",
   },
   bio: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 
 // Static Method
@@ -53,12 +58,27 @@ UserSchema.statics.getUsersCommentData = usersIdArr => {
   return new Promise((resolve, reject) => {
     User.find(
       { _id: { $in: mongooseObjectsArr } },
-      { _id: 1, avatar: 1, name: 1 }
+      { _id: 1, avatar: 1, name: 1 },
     )
       .then(users => {
         resolve(users);
       })
       .catch(err => reject("Couldn't Resolve Users data."));
+  });
+};
+
+UserSchema.statics.saveAndReturnToken = (user, token) => {
+  return new Promise((resolve, reject) => {
+    user.tokens.push(token);
+
+    user
+      .save()
+      .then(user => {
+        resolve(token);
+      })
+      .catch(err => {
+        reject("Token not saved in User.");
+      });
   });
 };
 

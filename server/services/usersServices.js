@@ -19,7 +19,7 @@ const testPrivate = (req, res) => {
     id: req.user.id,
     name: req.user.name,
     email: req.user.email,
-    avatar: req.user.avatar
+    avatar: req.user.avatar,
   });
 };
 
@@ -57,7 +57,7 @@ const updateUser = req => {
                 email,
                 password: req.body.password,
                 avatar: req.body.avatar,
-                bio: req.body.bio
+                bio: req.body.bio,
               });
             }
           })
@@ -77,13 +77,13 @@ const registerUser = req => {
           const newUser = new User({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
           });
           return User.registerUser(newUser);
         },
         err => {
           reject({ email: err });
-        }
+        },
       )
       .then(user => resolve(user))
       .catch(err => reject(err));
@@ -96,6 +96,7 @@ const registerUser = req => {
 const loginUser = req => {
   const email = req.body.email;
   const password = req.body.password;
+  let validatedUser = {};
 
   const promise = new Promise((resolve, reject) => {
     User.emailExists(email)
@@ -103,18 +104,25 @@ const loginUser = req => {
         user => {
           return Utils.validatePassword(password, user);
         },
-        err => reject({ email: err })
+        err => reject({ email: err }),
       )
       .then(user => {
+        validatedUser = user;
         return Utils.signJwtToken(user, keys.secretOrKey, {
-          expiresIn: 3600
+          expiresIn: 3600,
         });
       })
-      .then(rawtoken =>
-        resolve({
-          success: true,
-          token: "Bearer " + rawtoken
-        })
+      .then(rawtoken => {
+        return User.saveAndReturnToken(validatedUser, "Bearer " + rawtoken);
+      })
+      .then(
+        token => {
+          resolve({
+            success: true,
+            token,
+          });
+        },
+        err => reject({ token: err }),
       )
       .catch(err => reject({ password: err }));
   });
@@ -128,5 +136,5 @@ module.exports = {
   testPrivate,
   registerUser,
   loginUser,
-  updateUser
+  updateUser,
 };
