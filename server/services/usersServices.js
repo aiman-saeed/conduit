@@ -86,10 +86,29 @@ const registerUser = req => {
         },
       )
       .then(user => resolve(user))
-      .catch(err => reject(err));
+      .catch(err => reject({ err }));
   });
 
   return promise;
+};
+
+const logoutUser = req => {
+  return new Promise((resolve, reject) => {
+    const token = req.header("Authorization");
+    const currUserId = req.user.id;
+    User.findOne({ _id: currUserId })
+      .then(user => {
+        const index = user.tokens.indexOf(token);
+        if (index === -1) {
+          reject({ err: "You must be logged in." });
+        }
+
+        user.tokens.splice(index, 1);
+        return user.save();
+      })
+      .then(user => resolve(user))
+      .catch(err => reject({ err }));
+  });
 };
 
 // loginUser POST request service handler
@@ -137,4 +156,5 @@ module.exports = {
   registerUser,
   loginUser,
   updateUser,
+  logoutUser,
 };

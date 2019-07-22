@@ -19,7 +19,7 @@ router.get("/test", users_services.test);
 router.get(
   "/testPrivate",
   passport.authenticate("jwt", { session: false }),
-  users_services.testPrivate
+  users_services.testPrivate,
 );
 
 // @route   POST api/users/update
@@ -33,7 +33,7 @@ router.post(
       .updateUser(req)
       .then(user => res.json(user))
       .catch(err => res.status(400).json(err));
-  }
+  },
 );
 
 // @route   GET api/users/register
@@ -55,5 +55,19 @@ router.post("/login", (req, res) => {
     .then(data => res.json(data))
     .catch(err => res.status(400).json(err));
 });
+
+// @route   POST api/users/update
+// @desc    Update user
+// @access  Private
+router.post(
+  "/logout",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    users_services
+      .logoutUser(req)
+      .then(user => res.json(user))
+      .catch(err => res.status(400).json(err));
+  },
+);
 
 module.exports = router;

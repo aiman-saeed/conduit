@@ -25,7 +25,7 @@ export class SettingsContainer extends Component {
       userData,
       this.props.history,
       PROFILE_URL + "/" + this.props.auth.user.name,
-      { iat: this.props.auth.user.iat, exp: this.props.auth.user.exp }
+      { iat: this.props.auth.user.iat, exp: this.props.auth.user.exp },
     );
   };
 
@@ -43,10 +43,10 @@ export class SettingsContainer extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
 });
 
 export default connect(
   mapStateToProps,
-  { updateUser }
+  { updateUser },
 )(withRouter(SettingsContainer));
