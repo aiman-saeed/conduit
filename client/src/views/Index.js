@@ -16,7 +16,7 @@ import Landing from "../components/layout/Landing";
 import setAuthToken from "./../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import store from "./../store";
-import { setCurrentUser, logoutUser } from "./../actions/authActions";
+import { setCurrentUser } from "./../actions/authActions";
 
 import {
   LOGIN_URL,
@@ -35,16 +35,6 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
-
-  // Check for expired token
-  const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    //Logout user
-    store.dispatch(logoutUser());
-
-    // redirect to login
-    window.location.href = LOGIN_URL;
-  }
 }
 
 function Index(props) {

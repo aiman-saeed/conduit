@@ -70,4 +70,17 @@ router.post(
   },
 );
 
+// @route   POST api/users/refresh-token
+// @desc    refresh token
+// @access  Private
+router.post(
+  "/refresh-token",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    users_services
+      .refreshToken(req)
+      .then(data => res.json(data))
+      .catch(err => res.status(400).json(err));
+  },
+);
 module.exports = router;

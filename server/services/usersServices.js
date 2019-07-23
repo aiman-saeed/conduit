@@ -100,13 +100,47 @@ const logoutUser = req => {
       .then(user => {
         const index = user.tokens.indexOf(token);
         if (index === -1) {
-          reject({ err: "You must be logged in." });
+          reject({ err: "Unauthorized" });
         }
 
         user.tokens.splice(index, 1);
         return user.save();
       })
       .then(user => resolve(user))
+      .catch(err => reject({ err }));
+  });
+};
+
+// refresh-token POST request service handler
+const refreshToken = req => {
+  return new Promise((resolve, reject) => {
+    const token = req.header("Authorization");
+    const currUserId = req.user.id;
+    let updateUser = {};
+    User.findOne({ _id: currUserId })
+      .then(user => {
+        const index = user.tokens.indexOf(token);
+        if (index === -1) {
+          reject({ err: "Unauthorized" });
+        }
+        user.tokens.splice(index, 1);
+        return user.save();
+      })
+      .then(user => {
+        updateUser = user;
+        return Utils.signJwtToken(user, keys.secretOrKey, {
+          expiresIn: 10800,
+        });
+      })
+      .then(rawtoken => {
+        return User.saveAndReturnToken(updateUser, "Bearer " + rawtoken);
+      })
+      .then(token => {
+        resolve({
+          success: true,
+          token,
+        });
+      })
       .catch(err => reject({ err }));
   });
 };
@@ -157,4 +191,5 @@ module.exports = {
   loginUser,
   updateUser,
   logoutUser,
+  refreshToken,
 };
