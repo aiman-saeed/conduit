@@ -6,11 +6,11 @@ Technology Stack: NodeJS, Express, MongoDB, React, Redux.
 
 ## Install
 
-#### Server
+#### Server@localhost:5000
 1. $server: npm install
 2. $server:	npm run server
 
-#### Client
+#### Client@localhost:3000
 1. $client: npm install
 2. $client: npm start
 
